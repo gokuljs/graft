@@ -34,7 +34,6 @@ func main() {
 
 	// Register the Greeter service
 	pb.RegisterGreeterServer(s, &server{})
-
 	log.Println("Server is running on port 50051...")
 
 	// Start serving
