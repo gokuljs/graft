@@ -21,27 +21,28 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type HelloRequest struct {
+type RequestVoteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Term          int32                  `protobuf:"varint,1,opt,name=term,proto3" json:"term,omitempty"`
+	CandidateId   int32                  `protobuf:"varint,2,opt,name=candidate_id,json=candidateId,proto3" json:"candidate_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HelloRequest) Reset() {
-	*x = HelloRequest{}
+func (x *RequestVoteRequest) Reset() {
+	*x = RequestVoteRequest{}
 	mi := &file_proto_ping_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HelloRequest) String() string {
+func (x *RequestVoteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloRequest) ProtoMessage() {}
+func (*RequestVoteRequest) ProtoMessage() {}
 
-func (x *HelloRequest) ProtoReflect() protoreflect.Message {
+func (x *RequestVoteRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_ping_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,39 +54,47 @@ func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
-func (*HelloRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use RequestVoteRequest.ProtoReflect.Descriptor instead.
+func (*RequestVoteRequest) Descriptor() ([]byte, []int) {
 	return file_proto_ping_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *HelloRequest) GetName() string {
+func (x *RequestVoteRequest) GetTerm() int32 {
 	if x != nil {
-		return x.Name
+		return x.Term
 	}
-	return ""
+	return 0
 }
 
-type HelloResponse struct {
+func (x *RequestVoteRequest) GetCandidateId() int32 {
+	if x != nil {
+		return x.CandidateId
+	}
+	return 0
+}
+
+type RequestVoteReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Term          int32                  `protobuf:"varint,1,opt,name=term,proto3" json:"term,omitempty"`
+	VoteGranted   bool                   `protobuf:"varint,2,opt,name=vote_granted,json=voteGranted,proto3" json:"vote_granted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HelloResponse) Reset() {
-	*x = HelloResponse{}
+func (x *RequestVoteReply) Reset() {
+	*x = RequestVoteReply{}
 	mi := &file_proto_ping_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HelloResponse) String() string {
+func (x *RequestVoteReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloResponse) ProtoMessage() {}
+func (*RequestVoteReply) ProtoMessage() {}
 
-func (x *HelloResponse) ProtoReflect() protoreflect.Message {
+func (x *RequestVoteReply) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_ping_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -97,29 +106,38 @@ func (x *HelloResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloResponse.ProtoReflect.Descriptor instead.
-func (*HelloResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RequestVoteReply.ProtoReflect.Descriptor instead.
+func (*RequestVoteReply) Descriptor() ([]byte, []int) {
 	return file_proto_ping_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *HelloResponse) GetMessage() string {
+func (x *RequestVoteReply) GetTerm() int32 {
 	if x != nil {
-		return x.Message
+		return x.Term
 	}
-	return ""
+	return 0
+}
+
+func (x *RequestVoteReply) GetVoteGranted() bool {
+	if x != nil {
+		return x.VoteGranted
+	}
+	return false
 }
 
 var File_proto_ping_proto protoreflect.FileDescriptor
 
 const file_proto_ping_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/ping.proto\x12\x05graft\"\"\n" +
-	"\fHelloRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\")\n" +
-	"\rHelloResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2B\n" +
-	"\aGreeter\x127\n" +
-	"\bSayHello\x12\x13.graft.HelloRequest\x1a\x14.graft.HelloResponse\"\x00B\tZ\a./protob\x06proto3"
+	"\x10proto/ping.proto\x12\x05graft\"K\n" +
+	"\x12RequestVoteRequest\x12\x12\n" +
+	"\x04term\x18\x01 \x01(\x05R\x04term\x12!\n" +
+	"\fcandidate_id\x18\x02 \x01(\x05R\vcandidateId\"I\n" +
+	"\x10RequestVoteReply\x12\x12\n" +
+	"\x04term\x18\x01 \x01(\x05R\x04term\x12!\n" +
+	"\fvote_granted\x18\x02 \x01(\bR\vvoteGranted2I\n" +
+	"\x04Raft\x12A\n" +
+	"\vRequestVote\x12\x19.graft.RequestVoteRequest\x1a\x17.graft.RequestVoteReplyB\tZ\a./protob\x06proto3"
 
 var (
 	file_proto_ping_proto_rawDescOnce sync.Once
@@ -135,12 +153,12 @@ func file_proto_ping_proto_rawDescGZIP() []byte {
 
 var file_proto_ping_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_ping_proto_goTypes = []any{
-	(*HelloRequest)(nil),  // 0: graft.HelloRequest
-	(*HelloResponse)(nil), // 1: graft.HelloResponse
+	(*RequestVoteRequest)(nil), // 0: graft.RequestVoteRequest
+	(*RequestVoteReply)(nil),   // 1: graft.RequestVoteReply
 }
 var file_proto_ping_proto_depIdxs = []int32{
-	0, // 0: graft.Greeter.SayHello:input_type -> graft.HelloRequest
-	1, // 1: graft.Greeter.SayHello:output_type -> graft.HelloResponse
+	0, // 0: graft.Raft.RequestVote:input_type -> graft.RequestVoteRequest
+	1, // 1: graft.Raft.RequestVote:output_type -> graft.RequestVoteReply
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
