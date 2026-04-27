@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package graft;
+
+option go_package = "./proto";
+
+service Raft{
+    rpc RequestVote(RequestVoteRequest) returns (RequestVoteReply);
+}
+
+message RequestVoteRequest{
+    int32 term =1 ;
+    int32 candidate_id =2;
+}
+
+message RequestVoteReply{
+    int32 term=1;
+    bool vote_granted=2;
+}
