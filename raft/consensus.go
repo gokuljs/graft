@@ -147,6 +147,7 @@ func (s *Server) becomeFollower(term int) {
 }
 
 func (s *Server) startLeader() {
+	// start the leader by becoming a leader
 	s.state = Leader
 	log.Printf("[Server %d] becomes LEADER (term=%d)", s.id, s.term)
 }
